@@ -1,0 +1,47 @@
+# Linear Codes: Encoder and Decoder
+
+This project implements a complete pipeline for encoding and decoding messages using binary linear error-correcting codes over **GF(2)**. It supports:
+
+- Generation of **canonical parity-check matrices (H)** and **generator matrices (G)**
+- **Encoding** messages using G
+- **Decoding** messages using H
+- **Detection and correction** of single-bit errors
+- Support for arbitrary message lengths (e.g., (10,5)-linear codes)
+
+---
+
+## 📚 Background
+
+Linear codes help detect and correct errors in digital communication. They are defined by a **parity-check matrix (H)** and a corresponding **generator matrix (G)**. The null space of H defines valid codewords, and syndromes allow us to detect and possibly correct transmission errors.
+
+---
+
+## 🧠 What This Project Does
+
+### ✅ `linear_code(A)`
+Generates canonical `H` and `G` matrices from a matrix `A`.
+
+### ✅ `linear_encode(G, message)`
+Encodes a binary message using the generator matrix `G`.
+
+### ✅ `decode(H, received)`
+Decodes a 10-bit received message using parity-check matrix `H`:
+- Detects errors using the syndrome `Hx`
+- Attempts single-bit correction
+- Returns original 5-bit message if valid
+- Requests retransmission if correction fails
+
+---
+
+##  How to Use
+
+### Encoding Example
+```python
+A = [[1, 1],
+     [1, 0],
+     [1, 0]]
+
+H, G = linear_code(A)
+msg = [1, 0]
+encoded = linear_encode(G, msg)
+print(encoded)
